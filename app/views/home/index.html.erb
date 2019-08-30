@@ -1,1 +1,39 @@
-<h1>This is my home page</h1>
+<%= form_for Post.new do |f| %>
+  <div class="form-group text-center">
+    <%= f.text_area :description, cols: 60 %>
+  </div>
+  <div class="form-group text-center">
+    <%= f.file_field :image %>
+  </div>
+  <div class="form-group text-center">
+    <%= f.text_field :user_id, value: current_user.id, class:'d-none'%>
+  </div>
+  <br>
+  <div class="text-center">
+    <%= f.submit 'Create Post', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<div class="posts">
+  <% @posts.each do |post| %>
+    <section class="post">
+      <div class="user">
+        <div class="avatar">
+          <% if post.user.avatar.attached? %>
+            <%= link_to user_path(post.user) do %>
+              <%= image_tag post.user.avatar %>
+            <% end %>
+          <% else %>
+            <img src="https://pbs.twimg.com/profile_images/921248739746033665/cjBVcCJG_400x400.jpg">
+          <%end %>
+        </div>
+        <%= link_to post.user.username, user_path(post.user), class: 'username' %>
+      </div>
+      <%= image_tag post.image, class: 'main-image', size:"100x300" %>
+      <div class="description">
+        <%= post.description %>
+      </div>
+    </section>
+  <% end %>
+  <%= paginate @posts %>
+</div>
