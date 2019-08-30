@@ -2,7 +2,11 @@
   <div class="profile row">
     <div class="col-md-4 avatar">
       <div class="wrapper">
-        <img src="https://pbs.twimg.com/profile_images/921248739746033665/cjBVcCJG_400x400.jpg">
+        <% if current_user.avatar.attached? %>
+          <%= image_tag current_user.avatar %>
+        <% else %>
+          <img src="https://pbs.twimg.com/profile_images/921248739746033665/cjBVcCJG_400x400.jpg">
+        <%end %>
       </div>
     </div>
 
@@ -14,7 +18,7 @@
         </a>
       </div>
       <ul class="posts">
-        <li><span>12</span> posts</li>
+        <li><span><%= @posts.count %></span> posts</li>
         <li><span>195</span> followers</li>
         <li><span>345</span> following</li>
       </ul>
@@ -43,15 +47,11 @@
       </div>
 
       <div class="user-images">
-        <div class="wrapper">
-          <img src="https://s22294.pcdn.co/wp-content/uploads/LogoPrimary_300x329.jpg">
-        </div>
-        <div class="wrapper">
-          <img src="https://a.espncdn.com/i/teamlogos/nba/500/lac.png">
-        </div>
-        <div class="wrapper">
-          <img src="https://pbs.twimg.com/profile_images/1048230095331061761/Yq0a2q3b_400x400.jpg">
-        </div>
+        <% @posts.each do |post|%>
+          <div class="wrapper">
+            <%=image_tag post.image, size:"100x300" %>
+          </div>
+        <% end %>
       </div>
     </div>
 
